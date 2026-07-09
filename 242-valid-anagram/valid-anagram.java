@@ -19,20 +19,42 @@
 //     }
 // }
 
+// class Solution {
+//     public boolean isAnagram(String s, String t) {
+//         if(s.length()!=t.length())
+//         return false;
+//         HashMap<Character,Integer>h1=new HashMap<>();
+//         for(char c:s.toCharArray()){
+//             h1.put(c,h1.getOrDefault(c,0)+1);
+//         }
+        
+//         for(char c:t.toCharArray()){
+//             h1.put(c,h1.getOrDefault(c,0)-1);
+//         }
+//         for(int freq: h1.values()){
+//             if(freq!=0)
+//             return false;
+//         }
+//         return true;
+
+//     }
+// }
+
 class Solution {
     public boolean isAnagram(String s, String t) {
         if(s.length()!=t.length())
         return false;
-        HashMap<Character,Integer>h1=new HashMap<>();
+        int []freq=new int[26];
+
         for(char c:s.toCharArray()){
-            h1.put(c,h1.getOrDefault(c,0)+1);
+            freq[c-'a']++;
         }
-        
+       
         for(char c:t.toCharArray()){
-            h1.put(c,h1.getOrDefault(c,0)-1);
+            freq[c-'a']--;
         }
-        for(int freq: h1.values()){
-            if(freq!=0)
+        for(int cnt:freq){
+            if(cnt!=0)
             return false;
         }
         return true;
