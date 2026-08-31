@@ -2,34 +2,26 @@ class Solution {
     public int[] getAverages(int[] nums, int k) {
         int n=nums.length;
         int res[]=new int[n];
+        Arrays.fill(res,-1);
         if(k==0){
             return nums;
         }
-        if (2 * k + 1 > n) {
-            Arrays.fill(res, -1);
+        int windowSize=2*k+1;
+        if(windowSize>n){
             return res;
         }
-        for(int i=0;i<k;i++){
-            res[i] = -1;
-            
-        }
-        
-        for(int i=k;i<n-k;i++){
-            res[i]=sum(nums,i,k);
-        }
-        for(int i=n-k;i<n;i++){
-            res[i]=-1;
-        }
-        return res;
-    }
-    public int sum(int[] nums,int center,int k){
-        long  sum=0;
-        
-        for(int i=center-k;i<=k+center;i++){
+        long sum=0;
+        for(int i=0;i<windowSize;i++){
             sum+=nums[i];
         }
-        long avg=sum/(2*k+1);
-        return (int)avg;
+        res[k]=(int)(sum/windowSize);
+        for(int i=windowSize;i<n;i++){
+            sum+=nums[i];
+            sum-=nums[i-windowSize];
+            int center= i-k;
+            res[center]=(int)(sum/windowSize);
+        }
+        return res;
 
     }
 }
